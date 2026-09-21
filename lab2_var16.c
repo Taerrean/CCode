@@ -9,14 +9,14 @@ double dist(float x1, float y1, float x2, float y2) {
 
 int main()
 {
-    int n, k, i;
+    int n, k, i, cond;
     double s;
     float x[Nmax], y[Nmax];
     printf("Input dot number: "); scanf("%d", &n);
     s = 0.0;
     k = 0;
-    printf("%d\n", n);
-    if (0 < n < 21) {
+    cond = n > 0 && n < 21;
+    if (cond) {
         printf("Input dot coordinates:\n");
         for (i=0; i<n; i++)
         scanf("%f %f", &x[i], &y[i]);
@@ -28,6 +28,7 @@ int main()
         else {
             for (i=0; i<n-1; i++){
                 s = s + dist(x[n - 1], y[n - 1], x[i], y[i]);
+                printf("%lf\n", s);
                 if (y[i] > x[i])
                 k++;
             }
@@ -37,12 +38,18 @@ int main()
                 printf("All dots meet the condition.\n");
             }
             else {
-                    printf("Sought dots amount = %d\n", k);
+                if (k == 0) {
+                    printf("No dots meet the condition.\n");
+                }
+                else
+                printf("Sought dots amount = %d\n", k);
             }
             printf("Total distance from last dot = %lf\n", s);
         }
-    } else {
+    }
+    else {
         printf("Ineligible dot amount(1<=n<=20)");
         }
     return 0;
 }
+
