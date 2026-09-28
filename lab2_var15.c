@@ -18,13 +18,18 @@ int main()
     cond = n > 0 && n < 21;
     if (cond) {
         printf("Input point coordinates:\n");
-        for (i=0; i<n; i++)
-        scanf("%f %f", &x[i], &y[i]);
-        printf("Printing input data: \n");
-        printf("Initial point amount = %d\n", n);
-        printf("point coordinates:\n");
-        for (i=0; i < n; i++)
-        printf("x%d: %5.1f y%d: %5.1f\n", i, x[i], i, y[i]);
+        for (i=0; i<n; i++) {
+            scanf("%f %f", &x[i], &y[i]);
+            if (abs(x[i]) > 10.0||abs(y[i]) > 10.0){
+                printf("Incorrect coordinates(|x| <= 10, |y| <= 10).");
+                return 0;
+            }
+        }
+        printf("%35sLab_2 \n");
+        printf("Initial point number(n) = %d\n", n);
+        printf("Point coordinates:\n");
+        for (i=1; i < n + 1; i++)
+        printf("x%d: %5.1f y%d: %5.1f\n", i, x[i - 1], i, y[i - 1]);
         if (n == 1) {
             if (y[0] > x[0])
             k++;
@@ -46,12 +51,13 @@ int main()
                     printf("No point meet the condition.\n");
                 }
                 else
-                printf("Sought point amount = %d\n", k);
+                printf("Number of points meeting condition = %d\n", k);
             }
-            printf("Total distance from last point = %5.3lf\n", s);
+            printf("Total distance from last point = %5.5lf\n", s);
         }
     }
     else {
+        printf("%40sLab_2 \n");
         printf("Ineligible point amount(1<=n<=20)");
         }
     return 0;
