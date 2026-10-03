@@ -12,6 +12,7 @@ int main()
     int n, k, i, cond;
     double s;
     float x[Nmax], y[Nmax];
+    printf("%40sLab_2 \n");
     printf("Input point number: "); scanf("%d", &n);
     s = 0.0;
     k = 0;
@@ -25,7 +26,6 @@ int main()
                 return 0;
             }
         }
-        printf("%35sLab_2 \n");
         printf("Initial point number(n) = %d\n", n);
         printf("Point coordinates:\n");
         for (i=1; i < n + 1; i++)
@@ -48,7 +48,7 @@ int main()
             }
             else {
                 if (k == 0) {
-                    printf("No point meet the condition.\n");
+                    printf("No points meet the condition.\n");
                 }
                 else
                 printf("Number of points meeting condition = %d\n", k);
@@ -57,9 +57,7 @@ int main()
         }
     }
     else {
-        printf("%40sLab_2 \n");
         printf("Ineligible point amount(1<=n<=20)");
         }
     return 0;
 }
-
