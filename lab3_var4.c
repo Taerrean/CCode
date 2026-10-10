@@ -6,7 +6,7 @@
 int main() 
 {
     setlocale(LC_ALL, "ru-RU.UTF-8");
-    float x[Nmax], p, t, s = 0.0;
+    float x[Nmax], p, t, s = 0.0, d;
     int k = 0, n, i;
     printf("%40sLab_3\n");
     printf("Введите кол-во чисел(n): "); scanf("%d", &n);
@@ -40,8 +40,10 @@ int main()
     for(i=0; i<n; i++) printf("x[%d]: %5.1f\n", i + 1, x[i]);
 
     for(i=0; i<n; i++) {
-        if (abs(x[i] - p) <= t) {
-            s += abs(x[i] - p);
+        if (x[i] - p < 0) d = p - x[i];
+        else d = x[i] - p;
+        if (d <= t) {
+            s += d;
             k++;
         } 
     }
@@ -51,7 +53,7 @@ int main()
     else printf("Кол-во значений с разницей от p не меньше t = %d\n", k);
 
     if (s == 0.0) {
-        if (k == 0) printf("Подходящих точек нет, невозможно посчитать сумму");
+        if (k == 0) printf("Подходящих точек нет, невозможно посчитать сумму\n");
         else printf("Все значения совпадают с p\n");
     }
     else printf("Сумма разниц заданных значений и p = %5.1f\n", s);
