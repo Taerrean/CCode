@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <math.h>
 #define Nmax 20
 
-int main() 
+
+int main(void)
 {
-    setlocale(LC_ALL, "ru-RU.UTF-8");
+    setlocale(LC_ALL, "ru_RU.UTF-8");
     float x[Nmax], p, t, s = 0.0, d;
     int k = 0, n, i;
     printf("%40sLab_3\n");
@@ -15,13 +17,13 @@ int main()
         return 1;
     }
     printf("Введите точку отсчёта разницы величин(p): "); scanf("%f", &p);
-        if (abs(p) > 10.0) {
-        printf("Модуль точки отсчёта слишком большой(|p| <= 10)");
+        if (p < 0||p > 10.0) {
+        printf("Некорректная точка отсчёта(0< p <10");
         return 1;
     }
     printf("Введите критическое удаление(t): "); scanf("%f", &t);
-            if (t < 0||t > 20) {
-        printf("Выбрано некорректное критическое удаление(0 <= t <= 20)");
+            if (t < 0||t > 10) {
+        printf("Выбрано некорректное критическое удаление(0 <= t <= 10");
         return 1;
     }
     printf("Введите числовые значения(x):\n");
@@ -40,12 +42,14 @@ int main()
     for(i=0; i<n; i++) printf("x[%d]: %5.1f\n", i + 1, x[i]);
 
     for(i=0; i<n; i++) {
+        x[i] = x[i] * pow(-1, 1 + !(x[i] < 0));
+        printf("%f\n", x[i]);
         if (x[i] - p < 0) d = p - x[i];
         else d = x[i] - p;
         if (d <= t) {
-            s += d;
+            s += x[i];
             k++;
-        } 
+        }
     }
 
     if (k == n) printf("Все значения отличаются от p не более, чем на t\n");
