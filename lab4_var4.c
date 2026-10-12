@@ -6,7 +6,7 @@
 
 int main(void)
 {
-    char *locale = setlocale(LC_ALL, "ru-Ru.UTF-8");
+    char *locale = setlocale(LC_ALL, "ru_Ru.UTF-8");
 
     float x[Nmax], p, t, s = 0.0, d;
     int k = 0, n, i;
