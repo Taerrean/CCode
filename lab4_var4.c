@@ -1,12 +1,12 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <locale.h>
-
 #define Nmax 20
 
 int main(void)
 {
-    setlocale(LC_ALL, "ru-RU.UTF-8");
+    char *locale = setlocale(LC_ALL, "ru-Ru.UTF-8");
 
     float x[Nmax], p, t, s = 0.0, d;
     int k = 0, n, i;
@@ -60,8 +60,8 @@ int main(void)
         return 1;
     }
 
-    if (p < -10.0 || p > 10.0) {
-        fprintf(fout, "Модуль точки отсчёта слишком большой (|p| <= 10)\n");
+    if (p < 0 || p > 10.0) {
+        fprintf(fout, "Некорректная точка отсчёта(0 < p < 10\n");
         fclose(fin);
         fclose(fout);
         return 1;
@@ -74,8 +74,8 @@ int main(void)
         return 1;
     }
 
-    if (t < 0.0 || t > 20.0) {
-        fprintf(fout, "Выбрано некорректное критическое удаление (0 <= t <= 20)\n");
+    if (t < 0.0 || t > 10.0) {
+        fprintf(fout, "Выбрано некорректное критическое удаление (0 <= t <= 10)\n");
         fclose(fin);
         fclose(fout);
         return 1;
@@ -108,6 +108,7 @@ int main(void)
     }
 
     for (i = 0; i < n; i++) {
+        x[i] *= pow(-1, 1 + !(x[i] < 0));
         if (x[i] - p < 0)
             d = p - x[i];
         else
