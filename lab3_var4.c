@@ -48,7 +48,7 @@ int main(void)
         else d = ax - p;
         if (d <= t) {
             s += x[i];
-            sabs += ax;
+            sabs += d;
             k++;
         }
     }
