@@ -116,7 +116,7 @@ int main(void)
 
         if (d <= t) {
             s += x[i];
-            sabs += ax;
+            sabs += d;
             k++;
         }
     }
