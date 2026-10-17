@@ -108,14 +108,14 @@ int main(void)
     }
 
     for (i = 0; i < n; i++) {
-        x[i] *= pow(-1, 1 + !(x[i] < 0));
-        if (x[i] - p < 0)
-            d = p - x[i];
+        ax = x[i] * pow(-1, 1 + !(x[i] < 0));
+        if (ax - p < 0)
+            d = p - ax;
         else
-            d = x[i] - p;
+            d = ax - p;
 
         if (d <= t) {
-            s += d;
+            s += x[i];
             k++;
         }
     }
