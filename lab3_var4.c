@@ -8,7 +8,7 @@
 int main(void)
 {
     setlocale(LC_ALL, "ru_RU.UTF-8");
-    float x[Nmax], p, t, s = 0.0, d;
+    float x[Nmax], p, t, s = 0.0, d, ax, sabs = 0.0;
     int k = 0, n, i;
     printf("%40sLab_3\n");
     printf("Введите кол-во чисел(n): "); scanf("%d", &n);
@@ -29,7 +29,7 @@ int main(void)
     printf("Введите числовые значения(x):\n");
     for(i=0; i<n; i++) {
         scanf("%f", &x[i]);
-        if (abs(x[i]) > 10.0) {
+        if (fabs(x[i]) > 10.0) {
             printf("Модуль числа слишком большой(|x| <= 10)");
             return 1;
         }
@@ -48,6 +48,7 @@ int main(void)
         else d = ax - p;
         if (d <= t) {
             s += x[i];
+            sabs += ax;
             k++;
         }
     }
@@ -58,8 +59,11 @@ int main(void)
 
     if (s == 0.0) {
         if (k == 0) printf("Подходящих точек нет, невозможно посчитать сумму\n");
-        else printf("Все значения совпадают с p\n");
+        else {
+            if (sabs == 0)
+            printf("Все значения совпадают с p\n");
+            else printf("Сумма значений равна нулю(числа скомпенсировали друг друга)"\n)
     }
-    else printf("Сумма разниц заданных значений и p = %5.1f\n", s);
+    else printf("Сумма заданных значений и p = %5.1f\n", s);
     return 0;
 }
