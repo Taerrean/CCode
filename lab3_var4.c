@@ -42,10 +42,10 @@ int main(void)
     for(i=0; i<n; i++) printf("x[%d]: %5.1f\n", i + 1, x[i]);
 
     for(i=0; i<n; i++) {
-        x[i] = x[i] * pow(-1, 1 + !(x[i] < 0));
-        printf("%f\n", x[i]);
-        if (x[i] - p < 0) d = p - x[i];
-        else d = x[i] - p;
+        ax = x[i] * pow(-1, 1 + !(x[i] < 0));
+        printf("%f\n", ax);
+        if (ax - p < 0) d = p - ax;
+        else d = ax - p;
         if (d <= t) {
             s += x[i];
             k++;
