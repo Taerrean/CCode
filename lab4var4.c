@@ -8,7 +8,7 @@ int main(void)
 {
     char *locale = setlocale(LC_ALL, "ru-Ru.UTF-8");
 
-    float x[Nmax], p, t, s = 0.0, d;
+    float x[Nmax], p, t, s = 0.0, d, ax, sabs = 0.0;
     int k = 0, n, i;
 
     char in_name[256], out_name[256];
@@ -108,14 +108,15 @@ int main(void)
     }
 
     for (i = 0; i < n; i++) {
-        x[i] *= pow(-1, 1 + !(x < 0));
-        if (x[i] - p < 0)
-            d = p - x[i];
+        ax *= pow(-1, 1 + !(x < 0));
+        if (ax - p < 0)
+            d = p - ax;
         else
-            d = x[i] - p;
+            d = ax - p;
 
         if (d <= t) {
-            s += d;
+            s += x[i];
+            sabs += ax;
             k++;
         }
     }
@@ -130,9 +131,12 @@ int main(void)
     if (s == 0.0) {
         if (k == 0)
             fprintf(fout, "Подходящих точек нет, невозможно посчитать сумму\n");
-        else
+        else {
+            if (sabs == 0)
             fprintf(fout, "Все значения совпадают с p\n");
-    } else {
+            else fprintf(fout, "Сумма значений равна нулю(они скомпенсировались)");
+    } 
+        else {
         fprintf(fout, "Сумма разниц заданных значений и p = %5.1f\n", s);
     }
 
