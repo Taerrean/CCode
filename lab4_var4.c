@@ -137,7 +137,7 @@ int main(void)
             else fprintf(fout, "Сумма значений равна нулю(они скомпенсировались)");
     } 
         else {
-        fprintf(fout, "Сумма разниц заданных значений и p = %5.1f\n", s);
+        fprintf(fout, "Сумма подходящих значений = %5.1f\n", s);
     }
 
     fclose(fin);
