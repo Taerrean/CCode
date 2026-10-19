@@ -1,0 +1,120 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+#include <math.h>
+#define Nmax 20
+
+/*
+ * Заполняет массив out[] подходящими значениями x[i],
+ * для которых | |x[i]| - p | <= t.
+ *
+ * Параметры:
+ *   x[]      — входной массив;
+ *   n        — сколько элементов в x[];
+ *   p, t     — параметры отбора;
+ *   out[]    — БУФЕР РЕЗУЛЬТАТА, его выделяет вызывающий;
+ *   out_cap  — сколько элементов максимум можно записать в out[];
+ *   out_s    — сюда пишется сумма подходящих x[i];
+ *   out_sabs — сюда пишется сумма отклонений d.
+ *
+ * Возвращает: количество элементов, реально записанных в out[].
+ * Если вход некорректен (out==NULL, out_cap<=0 и т.п.) — возвращает 0.
+ */
+int reshenie(int n, float p, float t, const float x[],
+             float out[], int out_cap,
+             float *out_s, float *out_sabs)
+{
+    if (out_s)    *out_s    = 0.0f;
+    if (out_sabs) *out_sabs = 0.0f;
+
+    if (!x || !out || !out_s || !out_sabs) return 0;
+    if (n <= 0 || out_cap <= 0)            return 0;
+
+    int   k    = 0;
+    float s    = 0.0f;
+    float sabs = 0.0f;
+
+    for (int i = 0; i < n && k < out_cap; i++) {
+        float ax = fabsf(x[i]);
+        printf("%f\n", ax);
+
+        float d = fabsf(ax - p);
+
+        if (d <= t) {
+            out[k++] = x[i];        // ← кладём в список, память уже есть
+            s        += x[i];
+            sabs     += d;
+        }
+    }
+
+    *out_s    = s;
+    *out_sabs = sabs;
+    return k;                       // длина списка
+}
+
+int main(void)
+{
+    setlocale(LC_ALL, "ru_RU.UTF-8");
+
+    float x[Nmax], p, t;
+    float good[Nmax];               // ← буфер под результат, выделен в main
+    int   k = 0, n, i;
+    float s = 0.0f, sabs = 0.0f;
+
+    printf("\n%40s\n", "Lab_3");
+
+    printf("Введите кол-во чисел(n): ");
+    if (scanf("%d", &n) != 1) return 1;
+    if (n < 1 || n > Nmax) {
+        printf("Некорректное количество чисел (1 <= n <= 20)\n");
+        return 1;
+    }
+
+    printf("Введите точку отсчёта разницы величин(p): ");
+    if (scanf("%f", &p) != 1) return 1;
+    if (p < 0.0f || p > 10.0f) {
+        printf("Некорректная точка отсчёта (0 <= p <= 10)\n");
+        return 1;
+    }
+
+    printf("Введите критическое удаление(t): ");
+    if (scanf("%f", &t) != 1) return 1;
+    if (t < 0.0f || t > 10.0f) {
+        printf("Выбрано некорректное критическое удаление (0 <= t <= 10)\n");
+        return 1;
+    }
+
+    printf("Введите числовые значения(x):\n");
+    for (i = 0; i < n; i++) {
+        if (scanf("%f", &x[i]) != 1) return 1;
+        if (fabsf(x[i]) > 10.0f) {
+            printf("Модуль числа слишком большой (|x| <= 10)\n");
+            return 1;
+        }
+    }
+
+    printf("Кол-во значений(n): %d\n", n);
+    printf("Точка отсчёта разницы величин(p): %5.1f\n", p);
+    printf("Критическое удаление(t): %5.1f\n", t);
+    printf("Значения:\n");
+    for (i = 0; i < n; i++) printf("x%d: %5.1f\n", i + 1, x[i]);
+
+    /* --- вызов: буфер good[] передаём снаружи, длину получаем как return --- */
+    k = reshenie(n, p, t, x, good, Nmax, &s, &sabs);
+
+    printf("\nПодходящие значения:\n");
+    for (i = 0; i < k; i++) printf("  good[%d] = %5.1f\n", i, good[i]);
+
+    if (k == n)      printf("Все значения отличаются от p не более, чем на t\n");
+    else if (k == 0) printf("Нет точек, отличающихся от p не более, чем на t\n");
+    else             printf("Кол-во значений с разницей от p не меньше t = %d\n", k);
+
+    if (s == 0.0f) {
+        if (k == 0)            printf("Подходящих точек нет, невозможно посчитать сумму\n");
+        else if (sabs == 0.0f) printf("Все значения совпадают с p\n");
+        else                   printf("Сумма значений равна нулю (числа скомпенсировали друг друга)\n");
+    }
+    else printf("Сумма подходящих значений = %5.1f\n", s);
+
+    return 0;
+}
