@@ -135,6 +135,7 @@ int main(void)
             if (sabs == 0)
             fprintf(fout, "Все значения совпадают с p\n");
             else fprintf(fout, "Сумма значений равна нулю(они скомпенсировались)");
+        }
     } 
         else {
         fprintf(fout, "Сумма подходящих значений = %5.1f\n", s);
