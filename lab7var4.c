@@ -66,9 +66,9 @@ int main(int argc, char *argv[])
             fprintf(fout, "Метод сортировки: пузырьком\n");
             for (i = n - 1; i > 0; i--) {
                 for (j = 0; j < i; j++) {
-                    if (a[j] > a[j + 1]) {
-                        buf = a[j];
-                        a[j] = a[j + 1];
+                    if (abs(a[j]) > abs(a[j + 1])) {
+                        buf = abs(a[j]);
+                        a[j] = abs(a[j + 1]);
                         a[j + 1] = buf;
                     }
                 }
@@ -80,13 +80,13 @@ int main(int argc, char *argv[])
             fprintf(fout, "Метод сортировки: выбором\n");
             for (i = n - 1; i > 0; i--) {
                 int mi = i;
-                for (j = i - 1; j >= 0; j--) {
-                    if (a[j] > a[mi])
+                for (j = i - 1; j > 0; j--) {
+                    if (abs(a[j]) > abs(a[mi]))
                         mi = j;
                 }
                 if (mi != i) {
-                    buf = a[i];
-                    a[i] = a[mi];
+                    buf = abs(a[i]);
+                    a[i] = abs(a[mi]);
                     a[mi] = buf;
                 }
                 fprintf(fout, "\nШаг %d:\n", n - i);
@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
             }
         }
 
-        fprintf(fout, "\nГотово. Отсортированный массив:\n");
+        fprintf(fout, "\nГотово. Отсортированный массив по абс. значениям:\n");
         for (k = 0; k < n; k++)
             fprintf(fout, "%d ", a[k]);
         fprintf(fout, "\n");
