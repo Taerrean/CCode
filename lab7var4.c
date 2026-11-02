@@ -10,8 +10,7 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Как запускать: %s <входной файл> <выходной файл>\n", argv[0]);
         return 1;
     }
-    float buf;
-    int a[Nmax], k, i, n, j, meth = 0;
+    int a[Nmax], k, i, n, j, meth = 0, buf;
     FILE *fin, *fout;
     fin = fopen(argv[1], "r");
     if (fin == NULL) {
@@ -33,7 +32,7 @@ int main(int argc, char *argv[])
         return 1;
     }
     for(i=0; i<n; i++) {
-        if (fscanf(fin, "%f", &a[i]) != 1) {
+        if (fscanf(fin, "%d", &a[i]) != 1) {
             printf("Введено некорректное числовое значение a%d.", i + 1);
             fclose(fin);
             fclose(fout);
@@ -48,24 +47,22 @@ int main(int argc, char *argv[])
     }
 
     fprintf(fout, "Lab_7\n");
-    // Вывод исходных данных
     fprintf(fout, "Кол-во элементов массива(n): %d\n", n);
     fprintf(fout, "Значения:\n");
-    for(i=0; i<n; i++) fprintf(fout, "a%d: %f\n", i+1, a[i]);
-    // Сортировка(макс в конец)
+    for(i=0; i<n; i++) fprintf(fout, "a%d: %d\n", i+1, a[i]);
     if (meth == 0) {
         fprintf(fout, "Метод сортировки: пузырьком\n");
         //Пузырьком
         for (i=n-1; i>0; i--){
-            for (j=0; i<j; j++) {
+            for (j=0; j<i; j++) {
                 if(a[j] > a[j + 1]) {
                     buf = a[j];
                     a[j] = a[j + 1];
-                    a[j - 1] = buf;
+                    a[j + 1] = buf;
                 }
             }
             fprintf(fout, "\nШаг %d: \n", i + 1);
-            for (k=0; k<n; k++) fprintf(fout, "%5.1f ", a[k]);
+            for (k=0; k<n; k++) fprintf(fout, "%d ", a[k]);
         }
     }
     else {
@@ -80,11 +77,11 @@ int main(int argc, char *argv[])
                 a[mi] = buf;
             }
             fprintf(fout, "\nШаг %d: \n", i + 1);
-            for (k=0; k<n; k++) fprintf(fout, "%5.1f ", a[k]);
+            for (k=0; k<n; k++) fprintf(fout, "%d ", a[k]);
         }
     }
-    fprintf(fout, "\nГотово. Осортированный массив:\n");
-    for (k=0; k<n; k++) fprintf(fout, "%5.1f ", a[k]);
+    fprintf(fout, "\nГотово. Отсортированный массив:\n");
+    for (k=0; k<n; k++) fprintf(fout, "%d ", a[k]);
 
     fclose(fin);
     fclose(fout);
