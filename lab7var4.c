@@ -10,8 +10,8 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Как запускать: %s <входной файл> <выходной файл>\n", argv[0]);
         return 1;
     }
-    float a[Nmax], buf;
-    int k, i, n, j, meth = 0;
+    float buf;
+    int a[Nmax], k, i, n, j, meth = 0;
     FILE *fin, *fout;
     fin = fopen(argv[1], "r");
     if (fin == NULL) {
@@ -52,15 +52,15 @@ int main(int argc, char *argv[])
     fprintf(fout, "Кол-во элементов массива(n): %d\n", n);
     fprintf(fout, "Значения:\n");
     for(i=0; i<n; i++) fprintf(fout, "a%d: %f\n", i+1, a[i]);
-    // Сортировка(мин в начало)
+    // Сортировка(макс в конец)
     if (meth == 0) {
         fprintf(fout, "Метод сортировки: пузырьком\n");
         //Пузырьком
-        for (i=0; i<n; i++){
-            for (j=n-1; j>i; j--) {
-                if(a[j] < a[j-1]) {
+        for (i=n-1; i>0; i--){
+            for (j=0; i<j; j++) {
+                if(a[j] > a[j + 1]) {
                     buf = a[j];
-                    a[j] = a[j - 1];
+                    a[j] = a[j + 1];
                     a[j - 1] = buf;
                 }
             }
@@ -71,9 +71,9 @@ int main(int argc, char *argv[])
     else {
         fprintf(fout, "Метод сортировки: выбором\n");
         //Выбором
-        for (i=0;i<n;i++) {
+        for (i=n-1;i>-1;i--) {
             int mi = i;
-            for (j=i+1;j<n;j++) if (a[j] < a[mi]) mi = j;
+            for (j=i-1;j>-1;j--) if (a[j] > a[mi]) mi = j;
             if (mi != i) {
                 buf = a[i];
                 a[i] = a[mi];
