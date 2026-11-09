@@ -43,7 +43,6 @@ int main(int argc, char *argv[])
             if (fscanf(fin, "%d", &a[i]) != 1) {
                 printf("Введено некорректное числовое значение a%d.\n", i + 1);
                 flag = 0;
-                break;
             }
         }
     }
