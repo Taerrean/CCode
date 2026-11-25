@@ -24,7 +24,7 @@ void findmaxneg(int a[], int *ft, int *fn) {
 int main(int argc, char *argv[]) {
     setlocale(LC_CTYPE, "Russian");
 
-    int i, a[Nmax], t, n, ft = -1, fn = -1, flag = 1, check = 1;
+    int i, a[Nmax], t, n, ft = -1, fn = -1, flag = 1;
     FILE *fin = NULL, *fout = NULL;
 
     if (argc != 3) {
@@ -78,19 +78,17 @@ int main(int argc, char *argv[]) {
         findels(n, a, t, &ft, &fn);
         if (fn == -1) {
             fprintf(fout, "Поиск невозможен - не найдено отрицательных элементов.\n");
-            check = 0;
-        }
-        if (ft == -1) {
-            fprintf(fout, "Поиск невозможен - не найдено элементов, равных %d(t).\n", t);
-            check = 0;
-        }
-        if (fn > ft) {
-            fprintf(fout, "Поиск невозможен - первый отрицательный элемент массива находится после t(Номера: отр = %d, t = %d)\n", fn + 1, ft + 1);
-            check = 0;
-        }
-        if (check) {
-            findmaxneg(a, &ft, &fn);
-            fprintf(fout, "Максимальный отрицательный элемент до первого, равного %d(t) равен %d\n", t, a[fn]);
+        } else {
+            if (ft == -1) {
+                fprintf(fout, "Поиск невозможен - не найдено элементов, равных %d(t).\n", t);
+            } else {
+                if (fn > ft) {
+                    fprintf(fout, "Поиск невозможен - первый отрицательный элемент массива находится после t(Номера: отр = %d, t = %d)\n", fn + 1, ft + 1);
+                } else {
+                    findmaxneg(a, &ft, &fn);
+                    fprintf(fout, "Максимальный отрицательный элемент до первого, равного %d(t) равен %d\n", t, a[fn]);
+                }
+            }
         }
     }
     if (fin) fclose(fin);
