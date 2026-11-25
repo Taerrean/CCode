@@ -16,7 +16,7 @@ void findels(int n, int a[], int t, int *ft, int *fn) {
 void findmaxneg(int a[], int *ft, int *fn) {
     int i;
     for (i=*fn + 1; i<*ft; i++) {
-        if (a[i] < 0 && a[i] > *fn) *fn = a[i];
+        if (a[i] < 0 && a[i] > a[*fn]) *fn = i;
     }
     return;
 }
